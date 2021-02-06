@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+
 // GET /api/students/:id
 router.get('/:id', async (req, res, next) => {
   try {
@@ -25,7 +26,18 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST /api/students
-
+router.post('/',async(req,res,next)=>{
+  try{
+    const {firstname,lastname,email} = req.body
+    const student = await Student.create(
+      { firstname,lastname,email},
+      { include: Test}
+    );
+    res.json(students)
+  }catch(err){
+    next(err)
+  }
+})
 
 // PUT /api/students/:id
 router.put('/:id', async (req, res, next) => {
