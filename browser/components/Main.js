@@ -3,14 +3,17 @@ import axios from 'axios';
 
 import StudentList from './StudentList.js';
 import SingleStudent from './SingleStudent.js';
+import NewStudentForm from './NewStudentForm.js';
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       students: [],
-      selectedStudent: {}
+      selectedStudent: {},
+      formVisible:false
     };
+    this.toggleForm = this.toggleForm.bind(this)
   }
 
   componentDidMount() {
@@ -34,6 +37,13 @@ export default class Main extends Component {
     });
   };
 
+  toggleForm = ()=>{
+    const currentState = this.state.formVisible
+    this.setState ({
+      formVisible: !currentState
+    })
+  }
+
   render() {
     return (
       <div>
@@ -53,6 +63,9 @@ export default class Main extends Component {
         {this.state.selectedStudent.id ? (
           <SingleStudent student={this.state.selectedStudent} />
         ) : null}
+        <button onClick={()=>this.toggleForm()}>Add New Student</button>
+        {this.state.formVisible? <NewStudentForm /> : ''}
+        
       </div>
     );
   }
